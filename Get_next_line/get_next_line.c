@@ -12,27 +12,45 @@
 
 #include "get_next_line.h"
 
+static int			return_vl(int fd, int reading,	char *ln, char **line)
+{
+	while(ln[fd] != '\0')
+	{
+		return (1);
+		get_next_line(fd, line);
+	}
+	return (0);
+}
+
 int			get_next_line(int fd, char **line)
-{	
-	char	*buffer;
-	int		reading;
-	int		c;
-	
-	c = 0;
+{
+	static char		*ln;
+	char			*buffer;
+	int				reading;
+	char			c;
+
+
+	reading = 0;
+	c = '\n';
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (-1);
-	while (line[c] != '\0')
-	{
-		buffer = *line;
-		c++;
-	}
 	reading = read(fd, buffer, BUFFER_SIZE);
-	if (reading == 1)
-		return (1);
-	if (reading != 1)
-		return (-1);
-	return (0);
+	if (reading < 0)
+			return (-1);
+	while (reading >= 0)
+	{
+		if (reading == 0)
+			return (0);
+		if (ft_strchr(ln[fd], c))
+		{
+			ln = ft_strchr(ln[fd], c);
+			break;
+		}
+	}
+	buffer[reading] = '\0';
+	free(buffer);
+	return (return_vl(fd, reading, ln, line));
 }

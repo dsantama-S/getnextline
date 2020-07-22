@@ -23,3 +23,21 @@ size_t	ft_strlen(const char *s)
 	}
 	return (c);
 }
+
+char	*ft_strchr(char *s, int c)
+{
+	char			*s1;
+	unsigned char	c2;
+
+	s1 = (char *)s;
+	c2 = c;
+	while (*s1 != '\0')
+	{
+		if (*s1 == c2)
+			return (s1);
+		s1++;
+	}
+	if (*s1 == '\0' && c2 == '\0')
+		return (s1);
+	return (NULL);
+}
