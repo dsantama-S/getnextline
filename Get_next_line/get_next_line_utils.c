@@ -6,13 +6,13 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 09:31:35 by dsantama          #+#    #+#             */
-/*   Updated: 2020/07/21 11:28:56 by dsantama         ###   ########.fr       */
+/*   Updated: 2020/07/23 12:50:17 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+static size_t	ft_strlen(const char *s)
 {
 	int	c;
 
@@ -40,4 +40,60 @@ char	*ft_strchr(char *s, int c)
 	if (*s1 == '\0' && c2 == '\0')
 		return (s1);
 	return (NULL);
+}
+
+static void		*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char		*s1;
+	const unsigned char	*s2;
+
+	if (!dest && !src)
+		return (NULL);
+	s1 = (unsigned char*)dest;
+	s2 = (unsigned char*)src;
+	while (n-- > 0)
+		*(s1++) = *(s2++);
+	return (dest);
+}
+
+char			*ft_strdup(const char *src)
+{
+	char	*dest;
+	int		size;
+
+	size = ft_strlen(src);
+	dest = (char *)malloc(size + 1);
+	if (!dest)
+		return (NULL);
+	ft_memcpy(dest, src, size + 1);
+	return (dest);
+}
+
+char			*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	size_t	size;
+	size_t	n;
+
+	n = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	size = ft_strlen(s1) + ft_strlen(s2);
+	str = (char *)malloc(size + 1);
+	if (!str)
+		return (NULL);
+	while (*s1)
+	{
+		str[n] = *s1;
+		n++;
+		s1++;
+	}
+	while (*s2)
+	{
+		str[n] = *s2;
+		n++;
+		s2++;
+	}
+	str[n] = '\0';
+	return (str);
 }
