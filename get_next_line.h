@@ -1,48 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/21 11:17:25 by dsantama          #+#    #+#             */
-/*   Updated: 2020/07/21 11:27:13 by dsantama         ###   ########.fr       */
+/*   Created: 2020/07/21 09:31:29 by dsantama          #+#    #+#             */
+/*   Updated: 2020/07/29 12:45:59 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-static void		ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
-static void		ft_putendl(char *s)
-{
-	int i;
+# include <fcntl.h>
+# include <unistd.h>
+# include <string.h>
+# include <stdlib.h>
 
-	i = 0;
-	if (!(!s))
-	{
-		while (s[i] != '\0')
-		{
-			ft_putchar(s[i]);
-			i++;
-		}
-	}
-	write(1, &"\n", 1);
-}
+int			get_next_line(int fd, char **line);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strchr(char *s, int c);
+char		*ft_strdup(char *src);
+size_t		ft_strlcpy(char *dest, const char *src, size_t n);
 
-int				main(int ac, char **av)
-{
-	int		fd;
-	char	*line;
-
-	line = NULL;
-	fd = open(av[ac-1], O_RDONLY);
-	while (get_next_line(fd, &line))
-	{
-		ft_putendl(line);
-	}
-	close(fd);
-}
+#endif
